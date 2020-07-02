@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 命名空间，可以对sql进行分类的一个管理 -->
+<mapper namespace="com.report.mapping.UserMapper">
+    <!--获取用户渠道趋势分析维度-->
+    <select id="getProUser" parameterType="int" resultType="com.report.model.User">
+        CALL test_pro(#{id});
+    </select>
+    <!--用户渠道趋势分析-->
+    <select id="getVAreaChannelDim" resultType="String">
+        select DISTINCT channelname from v_area_channel ORDER BY channelname desc;
+    </select>
+    <!--用户渠道趋势分析-->
+    <select id="getVAreaChannel" parameterType="String" resultType="com.report.model.VAreaChannel">
+        select * from v_area_channel WHERE channelname = #{dim} order by areaname desc;
+    </select>
+    <!--获取用户请求方式对比情况维度-->
+    <select id="getVAreaChannelAll" resultType="com.report.model.VAreaChannel">
+        select * from v_area_channel order by areaname desc;
+    </select>
+    <!--用户请求方式对比情况-->
+    <select id="getVAreaRequestTypeDim"  resultType="String">
+        select DISTINCT requesttypename from v_area_requesttype ORDER BY requesttypename desc;
+    </select>
+    <!--用户请求方式对比情况-->
+    <select id="getVAreaRequestType" parameterType="String" resultType="com.report.model.VAreaRequesttype">
+        select * from v_area_requesttype WHERE requesttypename = #{dim} order by areaname desc;
+    </select>
+    <!--用户渠道饼图情况-->
+    <select id="getVAreaRequestTypeAll" resultType="com.report.model.VAreaRequesttype" >
+        select * from v_area_requesttype order by areaname desc;
+    </select>
+
+    <select id="getVChannelno" resultType="com.report.model.VChannelno" >
+        select * from v_channelno;
+    </select>
+    <select id="getVUserLogin" resultType="com.report.model.VUserLogin">
+        select * from v_user_login order by imei desc limit 10;
+    </select>
+    <select id="getDetail"  resultType="com.report.model.VUserDetail">
+        select * from v_user_detail order by imei desc;
+    </select>
+</mapper>
